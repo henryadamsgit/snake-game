@@ -4,9 +4,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake Game</title>
+    <link rel="stylesheet" href="style.scss" />
   </head>
-  <body>
+  <body id="background">
     <h2>Welcome to Snake!</h2>
+    <div class="scoreDisplay"></div>
+    <div class="container">
+      <canvas></canvas>
+      <div class="snake"></div>
+    </div>
+    <div class="key">
+      <button class="key__left">←</button>
+      <button class="key__up">↑</button>
+      <button class="key__down">↓</button>
+      <button class="key__right">→</button>
+    </div>
+    <div class="buttons">
+      <button class="buttons__play">Play Game</button>
+      <button class="buttons__reset">Reset Game</button>
+    </div>
   </body>
   <script src="app.js"></script>
 </html>
