@@ -1,50 +1,65 @@
-const backgroundScreen = document.querySelector("#background");
-const gameScreen = document.querySelector("#board");
-const snake = document.querySelector(".snake");
-const displayScore = document.querySelector(".scoreDisplay");
+//board
+const blockSize = 25;
+const rows = 18;
+const columns = 18;
+let board;
+let context;
 
-const keyPressed = document.querySelectorAll(".key");
-const playButton = document.querySelector(".buttons__play");
-const resetButton = document.querySelector(".buttons__reset");
+// snake head
+let snakeX = blockSize * 5;
+let snakeY = blockSize * 5;
 
-let direction = "right";
-// snakey
-let snakeArr = [];
-const startingLength = 3;
-// loop to increase snake size by 1
-for (let i = 0; i < startingLength; i++) {
-  snakeArr.push({ x: i, y: 0 });
-}
-// fucntion to display snake on screen
-const displaySnake = () => {
-  for (let i = 0; i < startingLength; i++) {}
+let velocityX = 0;
+let velocityY = 0;
+
+// food
+
+window.onload = () => {
+  board = document.querySelector("#board");
+  board.height = rows * blockSize;
+  board.width = columns * blockSize;
+  context = board.getContext("2d");
+
+  foodLocation();
+  document.addEventListener("keyup", handleKeyPress);
+  //update
+  setInterval(update, 1500 / 10);
 };
 
-//FUNCTIONS
+const update = () => {
+  context.fillStyle = "black";
+  context.fillRect(0, 0, board.width, board.height);
+
+  context.fillStyle = "brown";
+  context.fillRect(foodX, foodY, blockSize, blockSize);
+
+  context.fillStyle = "lime";
+  snakeX += velocityX * blockSize;
+  snakeY += velocityY * blockSize;
+  context.fillRect(snakeX, snakeY, blockSize, blockSize);
+};
+
+const foodLocation = () => {
+  // returns num 0-1 * col/row (18) floor gives whole number * blovkSize
+  foodX = Math.floor(Math.random() * columns) * blockSize;
+  foodY = Math.floor(Math.random() * rows) * blockSize;
+};
 
 const handleKeyPress = (event) => {
-  if (event.key == "up" && direction !== "up") {
-    return direction == "up";
-  } else if (event.key == "down" && direction !== "down") {
-    return direction == "down";
-  } else if (event.key == "left" && direction !== "left") {
-    return direction == "left";
-  } else if (event.key == "right" && direction !== "right") {
-    return direction == "right";
+  if (event.code == "ArrowUp") {
+    velocityX = 0;
+    velocityY = -1;
+  }
+  if (event.code == "ArrowDown") {
+    velocityX = 0;
+    velocityY = 1;
+  }
+  if (event.code == "ArrowLeft") {
+    velocityX = -1;
+    velocityY = 0;
+  }
+  if (event.code == "ArrowRight") {
+    velocityX = 1;
+    velocityY = 0;
   }
 };
-
-const handleStartGame = (event) => {};
-
-const handleResetGame = (event) => {
-  if (event.target === resetButton) {
-    location.reload();
-  }
-};
-
-// EVENT LISTENERS
-for (let i = 0; i < keyPressed.length; i++) {
-  keyPressed[i].addEventListener("keypress", handleKeyPress);
-}
-playButton.addEventListener("click", handleStartGame);
-resetButton.addEventListener("click", handleResetGame);
