@@ -9,10 +9,14 @@ let context;
 let snakeX = blockSize * 5;
 let snakeY = blockSize * 5;
 
+// snake speed
 let velocityX = 0;
 let velocityY = 0;
 
-// food
+// snake body
+let snakeBody = [];
+//score
+let score = 0;
 
 window.onload = () => {
   board = document.querySelector("#board");
@@ -23,7 +27,7 @@ window.onload = () => {
   foodLocation();
   document.addEventListener("keyup", handleKeyPress);
   //update
-  setInterval(update, 1500 / 10);
+  setInterval(update, 1200 / 10);
 };
 
 const update = () => {
@@ -33,12 +37,30 @@ const update = () => {
   context.fillStyle = "brown";
   context.fillRect(foodX, foodY, blockSize, blockSize);
 
+  // food eating
+  if (snakeX == foodX && snakeY == foodY) {
+    snakeBody.push([foodX, foodY]); //grow where food was
+    foodLocation();
+    //score++;
+    //displayScore.innerHTML = score;
+  }
+
+  for (let i = snakeBody.length - 1; i > 0; i--) {
+    snakeBody[i] = snakeBody[i - 1];
+  }
+
+  if (snakeBody.length) {
+    snakeBody[0] = [snakeX, snakeY];
+  }
+
   context.fillStyle = "lime";
   snakeX += velocityX * blockSize;
   snakeY += velocityY * blockSize;
   context.fillRect(snakeX, snakeY, blockSize, blockSize);
+  for (let i = 0; i < snakeBody.length; i++) {
+    context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+  }
 };
-
 const foodLocation = () => {
   // returns num 0-1 * col/row (18) floor gives whole number * blovkSize
   foodX = Math.floor(Math.random() * columns) * blockSize;
@@ -46,19 +68,19 @@ const foodLocation = () => {
 };
 
 const handleKeyPress = (event) => {
-  if (event.code == "ArrowUp") {
+  if (event.code == "ArrowUp" && velocityY != 1) {
     velocityX = 0;
     velocityY = -1;
   }
-  if (event.code == "ArrowDown") {
+  if (event.code == "ArrowDown" && velocityY != -1) {
     velocityX = 0;
     velocityY = 1;
   }
-  if (event.code == "ArrowLeft") {
+  if (event.code == "ArrowLeft" && velocityX != 1) {
     velocityX = -1;
     velocityY = 0;
   }
-  if (event.code == "ArrowRight") {
+  if (event.code == "ArrowRight" && velocityX != -1) {
     velocityX = 1;
     velocityY = 0;
   }
