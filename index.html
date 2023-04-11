@@ -10,13 +10,13 @@
 
   <body id="background">
     <h2>Welcome to Snake!</h2>
-    <div class="scoreDisplay"></div>
-    <div class="container">
-      <canvas id="board"></canvas>
-    </div>
-    <div class="buttons">
-      <button class="buttons__play">Play Game</button>
-      <button class="buttons__reset">Reset Game</button>
+    <p>Score: <span id="displayScore">0</span></p>
+    <canvas id="board"></canvas>
+
+    <div id="game-over-screen" style="display: none">
+      <h2>Game Over</h2>
+      <p>You hit the wall.</p>
+      <button onclick="restartGame()">Restart</button>
     </div>
   </body>
 </html>

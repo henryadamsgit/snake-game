@@ -1,4 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Orbitron";
   text-align: center;
+}
+
+.buttons {
+  padding-top: 20px;
+}
+
+#game-over-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: red;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#display {
+  font-size: 1.5rem;
 }

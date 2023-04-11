@@ -1,7 +1,7 @@
 //board
 const blockSize = 25;
-const rows = 18;
-const columns = 18;
+const rows = 20;
+const columns = 20;
 let board;
 let context;
 
@@ -15,8 +15,8 @@ let velocityY = 0;
 
 // snake body
 let snakeBody = [];
-//score
-let score = 0;
+
+let updateInterval;
 
 window.onload = () => {
   board = document.querySelector("#board");
@@ -25,9 +25,13 @@ window.onload = () => {
   context = board.getContext("2d");
 
   foodLocation();
+
   document.addEventListener("keyup", handleKeyPress);
   //update
-  setInterval(update, 1200 / 10);
+  updateInterval = setInterval(() => {
+    update();
+    handleGameOver();
+  }, 1200 / 10);
 };
 
 const update = () => {
@@ -41,8 +45,15 @@ const update = () => {
   if (snakeX == foodX && snakeY == foodY) {
     snakeBody.push([foodX, foodY]); //grow where food was
     foodLocation();
-    //score++;
-    //displayScore.innerHTML = score;
+  }
+
+  // keep track of score
+  let score = 0;
+  let displayScore = document.querySelector("#displayScore");
+  let justAte = false;
+  if (snakeX == foodX && snakeY == foodY) {
+    score++;
+    displayScore.innerHTML = score;
   }
 
   for (let i = snakeBody.length - 1; i > 0; i--) {
@@ -84,4 +95,46 @@ const handleKeyPress = (event) => {
     velocityX = 1;
     velocityY = 0;
   }
+};
+
+const handleGameOver = () => {
+  // Check if snake hits the wall
+  if (
+    snakeX < 0 ||
+    snakeX >= board.width ||
+    snakeY < 0 ||
+    snakeY >= board.height
+  ) {
+    clearInterval(updateInterval);
+    showGameOverScreen(true);
+  }
+
+  // Check if snake hits its own body
+  for (let i = 0; i < snakeBody.length; i++) {
+    if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
+      clearInterval(updateInterval);
+      showGameOverScreen(false);
+      break;
+    }
+  }
+};
+
+const showGameOverScreen = (hitWall) => {
+  const gameOverScreen = document.querySelector("#game-over-screen");
+  const message = hitWall ? "You hit the wall!" : "You hit your own body!";
+  const messageElement = gameOverScreen.querySelector("p");
+  messageElement.innerText = message;
+  gameOverScreen.style.display = "block";
+};
+
+const restartGame = () => {
+  const gameOverScreen = document.querySelector("#game-over-screen");
+  gameOverScreen.style.display = "none";
+  snakeX = blockSize * 5;
+  snakeY = blockSize * 5;
+  velocityX = 0;
+  velocityY = 0;
+  snakeBody = [];
+  score = 0;
+  window.onload();
 };
