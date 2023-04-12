@@ -18,8 +18,7 @@ Part 1. Creating the board, snake, and food.
     FOOD--
     The food is represented by the foodX and foodY variables, which are randomly generated within the board dimensions using the foodLocation() function.
 
-Part 2. Functions 
-    1. window.onload() – This function sets up the game board and initializes some variables when the window loads. It does the following: - Finds the HTML element with the ID "board" and sets its height and width based on the number of rows and columns and the size of each block. - Gets the 2D rendering context of the canvas element using the getContext() method. - Calls the foodLocation() function to randomly place the game's food on the board. - Adds an event listener to the document for the "keyup" event, which will call the handleKeyPress() function when a key is released. - Sets up a loop to update the game state every 120 milliseconds using the setInterval() method.
+Part 2. Functions 1. window.onload() – This function sets up the game board and initializes some variables when the window loads. It does the following: - Finds the HTML element with the ID "board" and sets its height and width based on the number of rows and columns and the size of each block. - Gets the 2D rendering context of the canvas element using the getContext() method. - Calls the foodLocation() function to randomly place the game's food on the board. - Adds an event listener to the document for the "keyup" event, which will call the handleKeyPress() function when a key is released. - Sets up a loop to update the game state every 120 milliseconds using the setInterval() method.
 
     2.	update () --. This function updates the canvas on each iteration in a loop, so the changing position of the snake and food are displayed. It does the following:
     -	Firstly it sets the canvas background colour to black and fills in the canvas area.
@@ -41,5 +40,9 @@ Part 2. Functions
 
     6.	showGameOverScreen () -- This function will show the game over screen with either a positive or negative value. This is because it takes a boolean parameter ‘hitWall’ which is true if the snake hits the wall, false otherwise. I wanted to use this ternary operator in order to display 2 different game over messages.
     To do this,  the function accesses the game over screen element from the HTML document using a query selector. It then selects the paragraph element inside the game over screen <div> and sets its innerText to the appropriate message based on the outcome of the game.
-    
+
     7.	restartGame() -- This function resets the game when the user clicks the "Restart" button after losing. It does this by hiding the game over screen, resetting the initial position and velocity of the snake, clearing the snake body, setting the score to zero, and calling the window.onload() function to start a new game.
+
+    8. playEatSound() -- This function sets the current time of an audio element named eatSound to 0 and plays the audio. When called this function plays a sound effect when the snake passes over (eats) food.
+
+    9. playGameOverSound() -- This function sets the current time of an audio element named gameOverSound to 0 and plays the audio. When called this function plays a sound effect when the game is over/ when handleGameOver().

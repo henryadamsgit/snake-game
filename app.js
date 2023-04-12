@@ -151,12 +151,10 @@ const restartGame = () => {
 
 const playEatSound = () => {
   eatSound.currentTime = 0;
-  eatSound.volume = 0.5;
   eatSound.play();
 };
 
 const playGameOverSound = () => {
   gameOverSound.currentTime = 0;
-  playGameOverSound.volume = 0.5;
   gameOverSound.play();
 };
