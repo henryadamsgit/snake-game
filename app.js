@@ -1,7 +1,7 @@
 //board
-const blockSize = 25;
-const rows = 20;
-const columns = 20;
+const blockSize = 22;
+const rows = 18;
+const columns = 18;
 let board;
 let context;
 
@@ -114,7 +114,6 @@ const handleGameOver = () => {
     clearInterval(updateInterval);
     showGameOverScreen(true);
   }
-
   // Check if snake hits its own body
   for (let i = 0; i < snakeBody.length; i++) {
     if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
