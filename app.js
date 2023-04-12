@@ -27,11 +27,11 @@ window.onload = () => {
   foodLocation();
 
   document.addEventListener("keyup", handleKeyPress);
-  //update
+  // Screen updates
   updateInterval = setInterval(() => {
     update();
     handleGameOver();
-  }, 1200 / 10);
+  }, 120);
 };
 
 const update = () => {
@@ -46,22 +46,20 @@ const update = () => {
     snakeBody.push([foodX, foodY]); //grow where food was
     foodLocation();
   }
-
   // keep track of score
   let score = 0;
   let displayScore = document.querySelector("#displayScore");
-  let justAte = false;
   if (snakeX == foodX && snakeY == foodY) {
     score++;
     displayScore.innerHTML = score;
   }
 
-  for (let i = snakeBody.length - 1; i > 0; i--) {
-    snakeBody[i] = snakeBody[i - 1];
-  }
-
   if (snakeBody.length) {
     snakeBody[0] = [snakeX, snakeY];
+  }
+
+  for (let i = snakeBody.length - 1; i > 0; i--) {
+    snakeBody[i] = snakeBody[i - 1];
   }
 
   context.fillStyle = "lime";
@@ -73,7 +71,7 @@ const update = () => {
   }
 };
 const foodLocation = () => {
-  // returns num 0-1 * col/row (18) floor gives whole number * blovkSize
+  // rounds down num 0-1 * col/row (20) floor gives whole number * blovkSize
   foodX = Math.floor(Math.random() * columns) * blockSize;
   foodY = Math.floor(Math.random() * rows) * blockSize;
 };
@@ -121,7 +119,7 @@ const handleGameOver = () => {
 
 const showGameOverScreen = (hitWall) => {
   const gameOverScreen = document.querySelector("#game-over-screen");
-  const message = hitWall ? "You hit the wall!" : "You hit your own body!";
+  const message = hitWall ? "You hit the wall!" : "You ate yourself!";
   const messageElement = gameOverScreen.querySelector("p");
   messageElement.innerText = message;
   gameOverScreen.style.display = "block";
