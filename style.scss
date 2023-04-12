@@ -4,8 +4,14 @@ body {
   font-family: "Orbitron";
   text-align: center;
 }
-.buttons {
-  padding-top: 20px;
+
+button {
+  border-radius: 4px;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: lime;
 }
 
 #game-over-screen {

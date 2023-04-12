@@ -16,6 +16,10 @@ let velocityY = 0;
 // snake body
 let snakeBody = [];
 
+// keep track of scores
+let score = 0;
+let highScore = 0;
+
 let updateInterval;
 
 window.onload = () => {
@@ -45,14 +49,17 @@ const update = () => {
   if (snakeX == foodX && snakeY == foodY) {
     snakeBody.push([foodX, foodY]); //grow where food was
     foodLocation();
-  }
-  // keep track of score
-  let score = 0;
-  let displayScore = document.querySelector("#displayScore");
-  if (snakeX == foodX && snakeY == foodY) {
     score++;
-    displayScore.innerHTML = score;
+    if (score > highScore) {
+      highScore = score;
+      const highScoreElement = document.querySelector("#highScore");
+      highScoreElement.innerHTML = highScore;
+    }
   }
+
+  // keep track of score
+  let displayScore = document.querySelector("#displayScore");
+  displayScore.innerHTML = score;
 
   if (snakeBody.length) {
     snakeBody[0] = [snakeX, snakeY];
@@ -70,6 +77,7 @@ const update = () => {
     context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
   }
 };
+
 const foodLocation = () => {
   // rounds down num 0-1 * col/row (20) floor gives whole number * blovkSize
   foodX = Math.floor(Math.random() * columns) * blockSize;
