@@ -8,8 +8,8 @@ let board;
 let context;
 
 // snake head starting position
-let snakeX = blockSize * 5;
-let snakeY = blockSize * 5;
+let snakeHeadX = blockSize * 5;
+let snakeHeadY = blockSize * 5;
 
 // snake speed
 let velocityX = 0;
@@ -49,7 +49,7 @@ const update = () => {
   context.fillRect(foodX, foodY, blockSize, blockSize);
 
   // food eating
-  if (snakeX == foodX && snakeY == foodY) {
+  if (snakeHeadX == foodX && snakeHeadY == foodY) {
     snakeBody.push([foodX, foodY]); //grow where food was
     foodLocation();
     const eatSound = document.getElementById("eatSound");
@@ -67,16 +67,16 @@ const update = () => {
 
   // learn ezplanation for these
   if (snakeBody.length) {
-    snakeBody[0] = [snakeX, snakeY];
+    snakeBody[0] = [snakeHeadX, snakeHeadY];
   }
   for (let i = snakeBody.length - 1; i > 0; i--) {
     snakeBody[i] = snakeBody[i - 1];
   }
 
   context.fillStyle = "lime";
-  snakeX += velocityX * blockSize;
-  snakeY += velocityY * blockSize;
-  context.fillRect(snakeX, snakeY, blockSize, blockSize);
+  snakeHeadX += velocityX * blockSize;
+  snakeHeadY += velocityY * blockSize;
+  context.fillRect(snakeHeadX, snakeHeadY, blockSize, blockSize);
   for (let i = 0; i < snakeBody.length; i++) {
     context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
   }
@@ -110,10 +110,10 @@ const handleKeyPress = (event) => {
 const handleGameOver = () => {
   // Check if snake hits the wall
   if (
-    snakeX < 0 ||
-    snakeX >= board.width ||
-    snakeY < 0 ||
-    snakeY >= board.height
+    snakeHeadX < 0 ||
+    snakeHeadX >= board.width ||
+    snakeHeadY < 0 ||
+    snakeHeadY >= board.height
   ) {
     clearInterval(updateInterval);
     playGameOverSound();
@@ -121,7 +121,7 @@ const handleGameOver = () => {
   }
   // Check if snake hits its own body
   for (let i = 0; i < snakeBody.length; i++) {
-    if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
+    if (snakeHeadX === snakeBody[i][0] && snakeHeadY === snakeBody[i][1]) {
       clearInterval(updateInterval);
       const gameOverSound = document.getElementById("gameOverSound");
       playGameOverSound();
@@ -142,8 +142,8 @@ const showGameOverScreen = (hitWall) => {
 const restartGame = () => {
   const gameOverScreen = document.querySelector("#game-over-screen");
   gameOverScreen.style.display = "none";
-  snakeX = blockSize * 5;
-  snakeY = blockSize * 5;
+  snakeHeadX = blockSize * 5;
+  snakeHeadY = blockSize * 5;
   velocityX = 0;
   velocityY = 0;
   snakeBody = [];
