@@ -49,6 +49,8 @@ const update = () => {
   if (snakeX == foodX && snakeY == foodY) {
     snakeBody.push([foodX, foodY]); //grow where food was
     foodLocation();
+    const eatSound = document.getElementById("eatSound");
+    playEatSound();
     score++;
     if (score > highScore) {
       highScore = score;
@@ -112,12 +114,15 @@ const handleGameOver = () => {
     snakeY >= board.height
   ) {
     clearInterval(updateInterval);
+    playGameOverSound();
     showGameOverScreen(true);
   }
   // Check if snake hits its own body
   for (let i = 0; i < snakeBody.length; i++) {
     if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
       clearInterval(updateInterval);
+      const gameOverSound = document.getElementById("gameOverSound");
+      playGameOverSound();
       showGameOverScreen(false);
       break;
     }
@@ -142,4 +147,16 @@ const restartGame = () => {
   snakeBody = [];
   score = 0;
   window.onload();
+};
+
+const playEatSound = () => {
+  eatSound.currentTime = 0;
+  eatSound.volume = 0.5;
+  eatSound.play();
+};
+
+const playGameOverSound = () => {
+  gameOverSound.currentTime = 0;
+  playGameOverSound.volume = 0.5;
+  gameOverSound.play();
 };
