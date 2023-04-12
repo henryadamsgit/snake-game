@@ -1,3 +1,5 @@
+//VARIABLE INITIALIZATION
+
 //board
 const blockSize = 22;
 const rows = 18;
@@ -22,6 +24,7 @@ let highScore = 0;
 
 let updateInterval;
 
+//FUNCTIONS
 window.onload = () => {
   board = document.querySelector("#board");
   board.height = rows * blockSize;
@@ -58,7 +61,6 @@ const update = () => {
       highScoreElement.innerHTML = highScore;
     }
   }
-
   // keep track of score
   let displayScore = document.querySelector("#displayScore");
   displayScore.innerHTML = score;
