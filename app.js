@@ -5,7 +5,7 @@ const columns = 18;
 let board;
 let context;
 
-// snake head
+// snake head starting position
 let snakeX = blockSize * 5;
 let snakeY = blockSize * 5;
 
@@ -35,7 +35,7 @@ window.onload = () => {
   updateInterval = setInterval(() => {
     update();
     handleGameOver();
-  }, 120);
+  }, 110);
 };
 
 const update = () => {
@@ -61,10 +61,10 @@ const update = () => {
   let displayScore = document.querySelector("#displayScore");
   displayScore.innerHTML = score;
 
+  // learn ezplanation for these
   if (snakeBody.length) {
     snakeBody[0] = [snakeX, snakeY];
   }
-
   for (let i = snakeBody.length - 1; i > 0; i--) {
     snakeBody[i] = snakeBody[i - 1];
   }
