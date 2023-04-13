@@ -1,6 +1,6 @@
-//VARIABLE INITIALIZATION
+//SETTING VARIABLES
 
-//board
+//draw board and set canvas
 const rows = 18;
 const columns = 18;
 const blockSize = 22;
@@ -16,12 +16,13 @@ let velocityX = 0;
 let velocityY = 0;
 
 // snake body
-let snakeBody = [];
+let snakeBodyArr = [];
 
 // keep track of scores
 let score = 0;
 let highScore = 0;
 
+// game update rate
 let updateInterval;
 
 //FUNCTIONS
@@ -34,7 +35,6 @@ window.onload = () => {
   foodLocation();
 
   document.addEventListener("keyup", handleKeyPress);
-  // Screen updates
   updateInterval = setInterval(() => {
     update();
     handleGameOver();
@@ -46,9 +46,10 @@ const update = () => {
   context.fillRect(0, 0, board.width, board.height);
   context.fillStyle = "brown";
   context.fillRect(foodX, foodY, blockSize, blockSize);
+
   // food eating
   if (snakeHeadX == foodX && snakeHeadY == foodY) {
-    snakeBody.push([foodX, foodY]); //grow where food was
+    snakeBodyArr.push([foodX, foodY]); //grow where food was
     foodLocation();
     const eatSound = document.getElementById("eatSound");
     playEatSound();
@@ -61,21 +62,25 @@ const update = () => {
     let displayScore = document.querySelector("#displayScore");
     displayScore.innerHTML = score;
   }
-  // keep track of score
 
   // Important
-  if (snakeBody.length) {
-    snakeBody[0] = [snakeHeadX, snakeHeadY];
+  if (snakeBodyArr.length) {
+    snakeBodyArr[0] = [snakeHeadX, snakeHeadY];
   }
-  for (let i = snakeBody.length - 1; i > 0; i--) {
-    snakeBody[i] = snakeBody[i - 1];
+  for (let i = snakeBodyArr.length - 1; i > 0; i--) {
+    snakeBodyArr[i] = snakeBodyArr[i - 1];
   }
   context.fillStyle = "lime";
   snakeHeadX += velocityX * blockSize;
   snakeHeadY += velocityY * blockSize;
   context.fillRect(snakeHeadX, snakeHeadY, blockSize, blockSize);
-  for (let i = 0; i < snakeBody.length; i++) {
-    context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+  for (let i = 0; i < snakeBodyArr.length; i++) {
+    context.fillRect(
+      snakeBodyArr[i][0],
+      snakeBodyArr[i][1],
+      blockSize,
+      blockSize
+    );
   }
 };
 
@@ -117,8 +122,11 @@ const handleGameOver = () => {
     showGameOverScreen(true);
   }
   // Check if snake hits its own body
-  for (let i = 0; i < snakeBody.length; i++) {
-    if (snakeHeadX === snakeBody[i][0] && snakeHeadY === snakeBody[i][1]) {
+  for (let i = 0; i < snakeBodyArr.length; i++) {
+    if (
+      snakeHeadX === snakeBodyArr[i][0] &&
+      snakeHeadY === snakeBodyArr[i][1]
+    ) {
       clearInterval(updateInterval);
       const gameOverSound = document.getElementById("gameOverSound");
       playGameOverSound();
@@ -143,7 +151,7 @@ const restartGame = () => {
   snakeHeadY = blockSize * 5;
   velocityX = 0;
   velocityY = 0;
-  snakeBody = [];
+  snakeBodyArr = [];
   score = 0;
   window.onload();
 };
