@@ -1,9 +1,9 @@
 //VARIABLE INITIALIZATION
 
 //board
-const blockSize = 22;
 const rows = 18;
 const columns = 18;
+const blockSize = 22;
 let board;
 let context;
 
@@ -44,10 +44,8 @@ window.onload = () => {
 const update = () => {
   context.fillStyle = "black";
   context.fillRect(0, 0, board.width, board.height);
-
   context.fillStyle = "brown";
   context.fillRect(foodX, foodY, blockSize, blockSize);
-
   // food eating
   if (snakeHeadX == foodX && snakeHeadY == foodY) {
     snakeBody.push([foodX, foodY]); //grow where food was
@@ -60,19 +58,18 @@ const update = () => {
       const highScoreElement = document.querySelector("#highScore");
       highScoreElement.innerHTML = highScore;
     }
+    let displayScore = document.querySelector("#displayScore");
+    displayScore.innerHTML = score;
   }
   // keep track of score
-  let displayScore = document.querySelector("#displayScore");
-  displayScore.innerHTML = score;
 
-  // learn ezplanation for these
+  // Important
   if (snakeBody.length) {
     snakeBody[0] = [snakeHeadX, snakeHeadY];
   }
   for (let i = snakeBody.length - 1; i > 0; i--) {
     snakeBody[i] = snakeBody[i - 1];
   }
-
   context.fillStyle = "lime";
   snakeHeadX += velocityX * blockSize;
   snakeHeadY += velocityY * blockSize;
