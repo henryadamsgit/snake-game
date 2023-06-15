@@ -1,3 +1,5 @@
+![Snake Game](images/Screenshot%202023-06-15%20at%2018.29.06.png)
+
 --Snake Game Project--
 This is a simple implementation of the classic Snake game using JavaScript, HTML Canvas and some additional CSS stylings.
 
